@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سوالف - Swalf</title>
+    
+    <link rel="stylesheet" href="css/Main.css">
+    <script src="js/config.js"></script>
+    <link rel="stylesheet" href="css/purchase.css">
+    
+    <style>
+        /* Game Purchase Modal Styles */
+        .game-purchase-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .game-purchase-modal.show {
+            display: flex;
+        }
+
+        .game-purchase-content {
+            background: #fff;
+            border-radius: 25px;
+            width: 90%;
+            max-width: 400px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .game-purchase-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 24px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10001;
+        }
+
+        .game-purchase-close:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        /* Game Packages View */
+        .game-packages-view {
+            padding: 20px;
+            display: block;
+        }
+
+        .package-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            margin: 10px 0;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package-promo {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .package-promo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .package-10-games,
+        .package-5-games,
+        .package-2-games,
+        .package-1-game {
+            cursor: default;
+        }
+
+        .package-10-games {
+            background: linear-gradient(135deg, #ff4757, #ff3838);
+        }
+
+        .package-5-games {
+            background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        }
+
+        .package-2-games {
+            background: linear-gradient(135deg, #2ed573, #7bed9f);
+        }
+
+        .package-1-game {
+            background: linear-gradient(135deg, #ff6b9d, #ff8cc8);
+        }
+
+        .package-promo {
+            background: linear-gradient(135deg, #0984e3, #74b9ff);
+        }
+
+        .package-add-credit {
+            background: linear-gradient(135deg, #636e72, #b2bec3);
+            color: #2d3436;
+        }
+
+        .package-text {
+            font-size: 1.1rem;
+        }
+
+        .package-price {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .add-credit-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .credit-input {
+            background: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 1rem;
+            width: 100px;
+            color: #333;
+        }
+
+        .add-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-family: 'Cairo', Arial, sans-serif;
+        }
+
+        /* Updated Game Interface Styles */
+        .tv-game-container,
+        .ipad-game,
+        .iphone-game {
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 8px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+            font-family: 'Cairo', sans-serif;
+            pointer-events: none;
+            user-select: none;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header styles for all devices */
+        .game-header {
+            background: linear-gradient(135deg, #1e4e93, #1e90ff, #00bfff);
+            color: white;
+            padding: 4px 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.4rem;
+            flex-shrink: 0;
+            font-family: 'Cairo', sans-serif;
+            border-radius: 4px 4px 0 0;
+            margin: -8px -8px 4px -8px;
+        }
+
+        .game-header-logo {
+            width: 12px;
+            height: 12px;
+            background-image: url('https://www.raed.net/img?id=1367927');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 2px;
+        }
+
+        .game-header button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 0.3rem;
+            padding: 1px 3px;
+            border-radius: 2px;
+            font-family: 'Cairo', sans-serif;
+            margin: 0 1px;
+        }
+
+        /* Game board with 6 cards */
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 2px;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .category-card {
+            background: linear-gradient(145deg, #ffffff, #f8fbff);
+            border-radius: 3px;
+            padding: 2px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #1e90ff;
+            gap: 1px;
+            min-height: 0;
+            height: 100%;
+        }
+
+        .category-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1px;
+            flex-shrink: 0;
+        }
+
+        .category-icon {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.25rem;
+            font-weight: bold;
+            color: #1e4e93;
+            background: #f0f8ff;
+            border: 1px solid #1e90ff;
+            flex-shrink: 0;
+        }
+
+        .category-name {
+            font-size: 0.3rem;
+            font-weight: 700;
+            color: #1e4e93;
+            text-align: center;
+            line-height: 1;
+            font-family: 'Cairo', sans-serif;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+
+        .scores-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 0.5px;
+            width: 100%;
+            flex: 1;
+            min-height: 20px;
+        }
+
+        .score-btn {
+            background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+            border: 1px solid #1e90ff;
+            border-radius: 1px;
+            padding: 0.5px;
+            font-size: 0.25rem;
+            font-weight: 700;
+            color: #1e4e93;
+            text-align: center;
+            font-family: 'Cairo', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 6px;
+            box-sizing: border-box;
+        }
+
+        /* Footer styles */
+        .game-footer {
+            background: linear-gradient(135deg, #e8f4f8, #f0f8ff);
+            padding: 3px 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.35rem;
+            flex-shrink: 0;
+            border-top: 1px solid rgba(30, 144, 255, 0.1);
+            font-family: 'Cairo', sans-serif;
+            border-radius: 0 0 4px 4px;
+            margin: 4px -8px -8px -8px;
+        }
+
+        .game-team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1px;
+        }
+
+        .game-team-name {
+            font-size: 0.35rem;
+            font-weight: 600;
+            color: #003366;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .game-team-controls {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            background: rgba(30, 144, 255, 0.1);
+            padding: 1px 3px;
+            border-radius: 6px;
+        }
+
+        .game-score-btn {
+            background: rgba(30, 144, 255, 0.2);
+            border: none;
+            color: #003366;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            font-size: 0.3rem;
+            font-weight: bold;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .game-score {
+            font-size: 0.4rem;
+            font-weight: 700;
+            color: #003366;
+            min-width: 8px;
+            text-align: center;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .game-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1px;
+        }
+
+        .game-footer-logo {
+            width: 10px;
+            height: 10px;
+            background-image: url('https://www.raed.net/img?id=1367927');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 1px;
+        }
+
+        /* iPad specific adjustments */
+        .ipad-game .game-header {
+            font-size: 0.35rem;
+            padding: 3px 5px;
+        }
+
+        .ipad-game .game-header-logo {
+            width: 10px;
+            height: 10px;
+        }
+
+        .ipad-game .category-icon {
+            width: 8px;
+            height: 8px;
+            font-size: 0.2rem;
+        }
+
+        .ipad-game .category-name {
+            font-size: 0.25rem;
+        }
+
+        .ipad-game .score-btn {
+            font-size: 0.2rem;
+            min-height: 5px;
+        }
+
+        /* iPhone specific adjustments */
+        .iphone-game .game-header {
+            font-size: 0.25rem;
+            padding: 2px 3px;
+        }
+
+        .iphone-game .game-header-logo {
+            width: 6px;
+            height: 6px;
+        }
+
+        .iphone-game .game-board {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+        }
+
+        .iphone-game .category-icon {
+            width: 5px;
+            height: 5px;
+            font-size: 0.15rem;
+        }
+
+        .iphone-game .category-name {
+            font-size: 0.15rem;
+        }
+
+        .iphone-game .scores-container {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            min-height: 15px;
+        }
+
+        .iphone-game .score-btn {
+            font-size: 0.12rem;
+            min-height: 3px;
+        }
+
+        .iphone-game .game-footer {
+            font-size: 0.2rem;
+            padding: 1px 3px;
+        }
+
+        @media (max-width: 768px) {
+            .game-purchase-content {
+                width: 95%;
+                margin: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="user-section">
+                <div class="user-info" id="userInfo" onclick="handleUserClick()">
+                    <div class="user-avatar">👤</div>
+                    <span class="user-name" id="userName">زائر</span>
+                    <button id="purchaseBtn" class="purchase-btn">اشتر لعبة</button>
+                </div>
+            </div>
+            <ul class="nav-menu">
+              <li><a href="Main.html" class="active">الصفحة الرئيسية</a></li>
+              <li><a href="browseGame.html">انشاء لعبة</a></li>
+              <li><a href="my-history.html">العابي</a></li>
+              <li><a href="#profile">الملف الشخصي</a></li>
+            </ul>
+            <div class="nav-left">
+                <div class="logo"></div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Game Purchase Modal -->
+    <div id="gamePurchaseModal" class="game-purchase-modal">
+        <div class="game-purchase-content">
+            <button class="game-purchase-close" onclick="closeGamePurchaseModal()">&times;</button>
+            
+            <div id="gamePackagesView" class="game-packages-view">
+                <div class="package-item package-10-games">
+                    <span class="package-text">10 ألعاب</span>
+                    <span class="package-price">10 KWD</span>
+                </div>
+
+                <div class="package-item package-5-games">
+                    <span class="package-text">5 ألعاب</span>
+                    <span class="package-price">4.5 KWD</span>
+                </div>
+
+                <div class="package-item package-2-games">
+                    <span class="package-text">لعبتين</span>
+                    <span class="package-price">2.5 KWD</span>
+                </div>
+
+                <div class="package-item package-1-game">
+                    <span class="package-text">لعبة وحدة</span>
+                    <span class="package-price">1 KWD</span>
+                </div>
+
+                <div class="package-item package-add-credit">
+                    <span class="package-text">كود خصم</span>
+                    <div class="add-credit-section">
+                        <input type="text" class="credit-input" placeholder="كود" id="promoCode">
+                        <button class="add-btn" onclick="applyPromoCode()">إضافة</button>
+                    </div>
+                </div>
+
+                <div class="package-item package-promo" onclick="redirectToPayment()">
+                    <span class="package-text">ادفع الآن</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="tv-setup">
+            <div class="living-room-tv">
+                <div class="living-room-tv-screen">
+                    <div class="tv-game-container">
+                        <!-- Header -->
+                        <div class="game-header">
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <div class="game-header-logo"></div>
+                            </div>
+                            <div style="display: flex; gap: 3px;">
+                                <button>انتهاء اللعبة</button>
+                                <button>الرجوع للوحة</button>
+                                <button>الخروج</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Game Board - 6 cards in 3x2 grid -->
+                        <div class="game-board">
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <div class="category-icon">🇰🇼</div>
+                                    <div class="category-name">الكويت</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <div class="category-icon">🚗</div>
+                                    <div class="category-name">سيارات</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <div class="category-icon">🃏</div>
+                                    <div class="category-name">بلوت</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <div class="category-icon">🤐</div>
+                                    <div class="category-name">ولا كلمة</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <div class="category-icon">🏠</div>
+                                    <div class="category-name">مونوبولي</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <div class="category-icon">🎯</div>
+                                    <div class="category-name">عامة</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Footer -->
+                        <div class="game-footer">
+                            <div class="game-team">
+                                <div class="game-team-name">الفريق الأول</div>
+                                <div class="game-team-controls">
+                                    <button class="game-score-btn">-</button>
+                                    <div class="game-score">2000</div>
+                                    <button class="game-score-btn">+</button>
+                                </div>
+                            </div>
+                            
+                            <div class="game-center">
+                                <div class="game-footer-logo"></div>
+                            </div>
+                            
+                            <div class="game-team">
+                                <div class="game-team-name">الفريق الثاني</div>
+                                <div class="game-team-controls">
+                                    <button class="game-score-btn">-</button>
+                                    <div class="game-score">3500</div>
+                                    <button class="game-score-btn">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tv-power"></div>
+                <div class="living-room-stand"></div>
+            </div>
+            
+            <!-- iPad -->
+            <div class="ipad">
+                <div class="ipad-screen">
+                    <div class="ipad-game">
+                        <!-- Header -->
+                        <div class="game-header">
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <div class="game-header-logo"></div>
+                            </div>
+                            <div style="display: flex; gap: 3px;">
+                                <button>انتهاء اللعبة</button>
+                                <button>الرجوع للوحة</button>
+                                <button>الخروج</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Game Board -->
+                        <div class="game-board">
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <div class="category-icon">🇰🇼</div>
+                                    <div class="category-name">الكويت</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <div class="category-icon">🚗</div>
+                                    <div class="category-name">سيارات</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <div class="category-icon">🃏</div>
+                                    <div class="category-name">بلوت</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <div class="category-icon">🤐</div>
+                                    <div class="category-name">ولا كلمة</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <div class="category-icon">🏠</div>
+                                    <div class="category-name">مونوبولي</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <div class="category-icon">🎯</div>
+                                    <div class="category-name">عامة</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Footer -->
+                        <div class="game-footer">
+                            <div class="game-team">
+                                <div class="game-team-name">الفريق الأول</div>
+                                <div class="game-team-controls">
+                                    <button class="game-score-btn">-</button>
+                                    <div class="game-score">2000</div>
+                                    <button class="game-score-btn">+</button>
+                                </div>
+                            </div>
+                            
+                            <div class="game-center">
+                                <div class="game-footer-logo"></div>
+                            </div>
+                            
+                            <div class="game-team">
+                                <div class="game-team-name">الفريق الثاني</div>
+                                <div class="game-team-controls">
+                                    <button class="game-score-btn">-</button>
+                                    <div class="game-score">3500</div>
+                                    <button class="game-score-btn">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- iPhone -->
+            <div class="iphone">
+                <div class="iphone-screen">
+                    <div class="iphone-game">
+                        <!-- Header -->
+                        <div class="game-header">
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <div class="game-header-logo"></div>
+                            </div>
+                            <div style="display: flex; gap: 2px;">
+                                <button>انتهاء اللعبة</button>
+                                <button>الرجوع للوحة</button>
+                                <button>الخروج</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Game Board - 6 cards in 2x3 layout for phone -->
+                        <div class="game-board">
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <div class="category-icon">🇰🇼</div>
+                                    <div class="category-name">الكويت</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <div class="category-icon">🚗</div>
+                                    <div class="category-name">سيارات</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <div class="category-icon">🃏</div>
+                                    <div class="category-name">بلوت</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <div class="category-icon">🤐</div>
+                                    <div class="category-name">ولا كلمة</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <div class="category-icon">🏠</div>
+                                    <div class="category-name">مونوبولي</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <div class="category-icon">🎯</div>
+                                    <div class="category-name">عامة</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Footer -->
+                        <div class="game-footer">
+                            <div class="game-team">
+                                <div class="game-team-name">الفريق الأول</div>
+                                <div class="game-team-controls">
+                                    <button class="game-score-btn">-</button>
+                                    <div class="game-score">2000</div>
+                                    <button class="game-score-btn">+</button>
+                                </div>
+                            </div>
+                            
+                            <div class="game-center">
+                                <div class="game-footer-logo"></div>
+                            </div>
+                            
+                            <div class="game-team">
+                                <div class="game-team-name">الفريق الثاني</div>
+                                <div class="game-team-controls">
+                                    <button class="game-score-btn">-</button>
+                                    <div class="game-score">3500</div>
+                                    <button class="game-score-btn">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">عن سوالف</h1>
+            <p class="hero-description">
+                اللعبة تشمل من 1 إلى 6 فئات متنوعة، وأسئلة مصممة لاختبار معلوماتك وزيادة الحماس. ولتعزيز فرص الفوز والتفوق، وفرنا 3 وسائل مساعدة لكل فريق – استخدمها بحكمة
+            </p>
+        </div>
+    </section>
+
+    <!-- Game Features Section -->
+    <section class="game-features" id="features">
+        <h2 class="features-title">الميزات بالعبة</h2>
+        <div class="features-container">
+            <div class="feature-box">
+                <h3 class="feature-name">سحب نقاط</h3>
+                <img src="https://www.raed.net/img?id=1368024" alt="سحب نقاط" class="feature-image">
+                <p class="feature-description">إذا جاوبت صح، تكسب ربع نقاط الفريق المنافس!</p>
+            </div>
+            <div class="feature-box">
+                <h3 class="feature-name">اتصال بصديق</h3>
+                <img src="https://www.raed.net/img?id=1368023" alt="اتصال بصديق" class="feature-image">
+                <p class="feature-description">صاحبك العبقري اللي دايم تعتمد عليه.. الحين دورك تتصل فيه!</p>
+            </div>
+            <div class="feature-box">
+                <h3 class="feature-name">الحفرة</h3>
+                <img src="https://www.raed.net/img?id=1368025" alt="الحفرة" class="feature-image">
+                <p class="feature-description">جاوب إجابة صحيحة، واسحب من نقاط الفريق الخصم نفس العدد اللي كسبته!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="contact-box">
+            <div class="contact-logo"></div>
+            <div class="contact-content">
+                <h3 class="contact-title">تواصل معنا</h3>
+                <p class="contact-description">عندك سوال؟ لا تتردد لحظة تواصل معنا الحين واحنا جاهزين نرد على كل استفساراتك ونساعدك بكل اللي تحتاجه.</p>
+            </div>
+            <div class="contact-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-logo"></div>
+            <div class="copyright">Copyright 2025 Swalf - All Rights Reserved</div>
+        </div>
+    </footer>
+
+<script>
+        let currentUser = null;
+        let userGamesRemaining = 0;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            checkUserSession();
+            updateUserDisplay();
+            updateGamesCount();
+            
+            document.getElementById('purchaseBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                showGamePurchaseModal();
+            });
+        });
+
+        function checkUserSession() {
+            const userData = localStorage.getItem('swalf_current_user');
+            if (userData) {
+                currentUser = JSON.parse(userData);
+                userGamesRemaining = currentUser.gamesRemaining || 0;
+            }
+        }
+
+        function updateUserDisplay() {
+            const userName = document.getElementById('userName');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const userInfo = document.getElementById('userInfo');
+
+            if (currentUser) {
+                userName.textContent = `أهلاً ${currentUser.firstName}`;
+                if (logoutBtn) logoutBtn.style.display = 'block';
+                userInfo.style.cursor = 'default';
+                userInfo.onclick = null;
+            } else {
+                userName.textContent = 'زائر';
+                if (logoutBtn) logoutBtn.style.display = 'none';
+                userInfo.style.cursor = 'pointer';
+                userInfo.onclick = handleUserClick;
+            }
+        }
+
+        function handleUserClick() {
+            if (!currentUser) {
+                window.location.href = 'login.html';
+            }
+        }
+
+        function updateGamesCount() {
+            const gamesCountDisplay = document.getElementById('gamesCountDisplay');
+            if (gamesCountDisplay) {
+                gamesCountDisplay.textContent = userGamesRemaining;
+            }
+        }
+
+        function showGamePurchaseModal() {
+            document.getElementById('gamePurchaseModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeGamePurchaseModal() {
+            document.getElementById('gamePurchaseModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        function redirectToPayment() {
+            if (!currentUser) {
+                alert('يرجى تسجيل الدخول أولاً للمتابعة مع عملية الشراء');
+                closeGamePurchaseModal();
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            window.open('https://checkout.upayments.com/pay-me/w4d3llxnDq', '_blank');
+        }
+
+        function applyPromoCode() {
+            const promoCode = document.getElementById('promoCode').value.trim();
+            
+            if (!promoCode) {
+                alert('يرجى إدخال كود الخصم');
+                return;
+            }
+
+            const promoCodes = {
+                'SWALF2025': { games: 5, description: 'مكافأة العام الجديد - 5 ألعاب مجانية!' },
+                'WELCOME': { games: 2, description: 'مرحباً بك - لعبتين مجانيتين!' },
+                'FRIEND': { games: 1, description: 'إحالة صديق - لعبة مجانية!' }
+            };
+
+            if (promoCodes[promoCode.toUpperCase()]) {
+                const promo = promoCodes[promoCode.toUpperCase()];
+                
+                if (!currentUser) {
+                    alert('يرجى تسجيل الدخول أولاً لاستخدام كود الخصم');
+                    return;
+                }
+
+                const usedPromoCodes = currentUser.usedPromoCodes || [];
+                if (usedPromoCodes.includes(promoCode.toUpperCase())) {
+                    alert('تم استخدام هذا الكود من قبل');
+                    return;
+                }
+
+                userGamesRemaining += promo.games;
+                currentUser.gamesRemaining = userGamesRemaining;
+                
+                currentUser.usedPromoCodes = [...usedPromoCodes, promoCode.toUpperCase()];
+                
+                const users = JSON.parse(localStorage.getItem('swalf_users') || '[]');
+                const userIndex = users.findIndex(u => u.email === currentUser.email);
+                if (userIndex !== -1) {
+                    users[userIndex] = currentUser;
+                    localStorage.setItem('swalf_users', JSON.stringify(users));
+                }
+                localStorage.setItem('swalf_current_user', JSON.stringify(currentUser));
+                
+                updateGamesCount();
+                document.getElementById('promoCode').value = '';
+                alert(`🎉 ${promo.description}\nتم إضافة ${promo.games} ألعاب إلى حسابك!`);
+                
+            } else {
+                alert('كود خصم غير صحيح');
+            }
+        }
+
+        function logout() {
+            if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+                localStorage.removeItem('swalf_current_user');
+                localStorage.removeItem('swalf_remember_me');
+                currentUser = null;
+                userGamesRemaining = 0;
+                updateUserDisplay();
+                updateGamesCount();
+                
+                alert('تم تسجيل الخروج بنجاح');
+                window.location.reload();
+            }
+        }
+
+        document.addEventListener('click', function(e) {
+            const modal = document.getElementById('gamePurchaseModal');
+            if (e.target === modal) {
+                closeGamePurchaseModal();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeGamePurchaseModal();
+            }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(0, 0, 0, 0.95)';
+            } else {
+                header.style.background = 'rgba(0, 0, 0, 0.9)';
+            }
+        });
+
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.08)';
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+
+            btn.addEventListener('mousedown', function() {
+                this.style.transform = 'translateY(-4px) scale(1.05)';
+            });
+
+            btn.addEventListener('mouseup', function() {
+                this.style.transform = 'translateY(-8px) scale(1.08)';
+            });
+        });
+
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                this.style.transform = `translateY(-20px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) rotateX(0deg) rotateY(0deg)';
+            });
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(100px)';
+            card.style.transition = `all 0.8s ease ${index * 0.2}s`;
+            observer.observe(card);
+        });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1162 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', Arial, sans-serif;
+            background: #1e4e93;
+            color: white;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Background */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: #1e4e93;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: linear-gradient(135deg, #1e4e93, #2563eb);
+            padding: 12px 0;
+            box-shadow: 0 4px 20px rgba(30, 78, 147, 0.3);
+        }
+
+        .nav {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 60px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background-image: url('https://www.raed.net/img?id=1367927');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: brightness(0) invert(1);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+            filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 0;
+        }
+
+        .nav-menu li {
+            margin: 0 5px;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 1.1rem;
+            position: relative;
+            transition: all 0.3s ease;
+            padding: 12px 25px;
+            border-radius: 25px;
+            display: block;
+        }
+
+        .nav-menu a:hover {
+            color: white;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-menu a.active {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: 700;
+        }
+
+        /* User Section */
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .user-info:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .user-avatar:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .user-name {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Purchase Button */
+        .purchase-btn {
+            background: linear-gradient(2, 34, 150);
+            color: #1e4e93;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+            font-family: 'Cairo', Arial, sans-serif;
+        }
+
+        .purchase-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Split Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 80px;
+            padding: 120px 60px 60px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .hero-content {
+            padding: 40px 0;
+        }
+
+        .hero-title {
+            font-size: clamp(4rem, 10vw, 9rem);
+            font-weight: 900;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ffffff, #3b82f6, #1e4e93);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleGlow 4s ease-in-out infinite;
+            line-height: 1;
+        }
+
+        .hero-subtitle {
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 50px;
+            line-height: 1.8;
+        }
+
+        .cta-container {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 20px 45px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            min-width: 200px;
+            justify-content: center;
+            font-family: 'Cairo', Arial, sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1e4e93, #2563eb, #3b82f6);
+            color: white;
+            box-shadow: 0 15px 40px rgba(30, 78, 147, 0.5);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-8px) scale(1.08);
+            box-shadow: 0 25px 60px rgba(30, 78, 147, 0.7);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(15px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-8px) scale(1.08);
+        }
+
+        /* TV Living Room Setup */
+        .tv-setup {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            pointer-events: none;
+            user-select: none;
+            gap: 30px;
+        }
+
+        .living-room-tv {
+            position: relative;
+            width: 400px;
+            height: 250px;
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            border-radius: 15px;
+            box-shadow: 
+                0 40px 80px rgba(0, 0, 0, 0.4),
+                inset 0 2px 10px rgba(255, 255, 255, 0.1);
+            animation: tvFloat 6s ease-in-out infinite;
+        }
+
+        .living-room-tv::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 35px;
+            background: #000;
+            border-radius: 10px;
+            border: 2px solid #333;
+        }
+
+        .living-room-tv-screen {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 40px;
+            background: #f4f9ff;
+            border-radius: 8px;
+            padding: 10px;
+            overflow: hidden;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* TV Stand - Living Room Style */
+        .living-room-stand {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 25px;
+            background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .living-room-stand::before {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            height: 20px;
+            background: linear-gradient(135deg, #8B4513, #A0522D);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* iPad */
+        .ipad {
+            position: relative;
+            width: 150px;
+            height: 200px;
+            background: linear-gradient(135deg, #E5E5E5, #CCCCCC);
+            border-radius: 20px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                inset 0 1px 5px rgba(255, 255, 255, 0.2);
+            transform: rotate(-10deg);
+            animation: deviceFloat 8s ease-in-out infinite;
+        }
+
+        .ipad::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            background: #000;
+            border-radius: 12px;
+        }
+
+        .ipad-screen {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            right: 16px;
+            bottom: 16px;
+            background: #f4f9ff;
+            border-radius: 8px;
+            padding: 6px;
+            overflow: hidden;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .ipad-game {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 5px;
+            padding: 6px 6px 25px;
+            font-size: 0.45rem;
+            position: relative;
+        }
+
+        /* iPhone */
+        .iphone {
+            position: relative;
+            width: 70px;
+            height: 140px;
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            border-radius: 25px;
+            box-shadow: 
+                0 15px 30px rgba(0, 0, 0, 0.4),
+                inset 0 1px 3px rgba(255, 255, 255, 0.1);
+            transform: rotate(15deg);
+            animation: deviceFloat 10s ease-in-out infinite reverse;
+        }
+
+        .iphone::before {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            right: 6px;
+            bottom: 6px;
+            background: #000;
+            border-radius: 18px;
+        }
+
+        .iphone-screen {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            background: #f4f9ff;
+            border-radius: 15px;
+            padding: 4px;
+            overflow: hidden;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .iphone-game {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 3px;
+            padding: 4px 4px 18px;
+            font-size: 0.25rem;
+            position: relative;
+        }
+
+        /* Power indicators */
+        .tv-power {
+            position: absolute;
+            bottom: 25px;
+            right: 25px;
+            width: 8px;
+            height: 8px;
+            background: #00ff00;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff00;
+            animation: powerBlink 3s ease-in-out infinite;
+        }
+
+        /* Adjust game containers */
+        .tv-game-container {
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 15px 15px 45px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+            font-family: 'Cairo', sans-serif;
+            pointer-events: none;
+            user-select: none;
+            position: relative;
+        }
+
+        /* TV elements */
+        .tv-game-title {
+            text-align: center;
+            color: #1e4e93;
+            border-bottom: 2px solid #1e4e93;
+            padding-bottom: 4px;
+            font-size: 0.9rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(30, 78, 147, 0.2);
+        }
+
+        .tv-game-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .tv-game-item {
+            background-color: #e6f0ff;
+            padding: 4px;
+            border-radius: 4px;
+            text-align: center;
+            pointer-events: none;
+            user-select: none;
+            border: 1px solid rgba(30, 78, 147, 0.1);
+            box-shadow: 0 1px 4px rgba(30, 78, 147, 0.1);
+        }
+
+        .tv-game-logo {
+            width: 20px;
+            height: 20px;
+            margin: 0 auto 3px;
+            border-radius: 3px;
+            object-fit: contain;
+            pointer-events: none;
+            user-select: none;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .tv-game-name {
+            font-size: 0.4rem;
+            font-weight: 700;
+            color: #1e4e93;
+            margin-bottom: 3px;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .tv-game-score {
+            margin-top: 2px;
+            padding: 1px;
+            background-color: #1e4e93;
+            color: white;
+            border-radius: 2px;
+            font-weight: 600;
+            font-size: 0.3rem;
+            pointer-events: none;
+            user-select: none;
+            box-shadow: 0 1px 2px rgba(30, 78, 147, 0.3);
+        }
+
+        .tv-player-info {
+            text-align: center;
+            margin-top: 4px;
+            font-size: 0.4rem;
+            color: #1e4e93;
+            font-weight: 600;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Score Bar */
+        .game-score-bar {
+            position: absolute;
+            bottom: 3px;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: linear-gradient(135deg, #1e4e93, #2563eb);
+            border-radius: 0 0 5px 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8px;
+            font-size: 0.5rem;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 -2px 6px rgba(30, 78, 147, 0.4);
+        }
+
+        .team-section {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .team-name {
+            color: white;
+            font-size: 0.5rem;
+            font-weight: 700;
+        }
+
+        .team-score {
+            color: white;
+            font-size: 0.6rem;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        /* iPad elements */
+        .ipad-game-title {
+            text-align: center;
+            color: #1e4e93;
+            font-size: 0.4rem;
+            font-weight: bold;
+            margin-bottom: 2px;
+            border-bottom: 1px solid #1e4e93;
+            padding-bottom: 1px;
+        }
+
+        .ipad-game-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            margin-top: 2px;
+        }
+
+.ipad-game-item {
+           background: #e6f0ff;
+           padding: 1px;
+           border-radius: 1px;
+           text-align: center;
+       }
+
+       .ipad-game-item img {
+           width: 8px;
+           height: 8px;
+           margin-bottom: 1px;
+       }
+
+       .ipad-game-item p {
+           font-size: 0.25rem;
+           color: #1e4e93;
+           margin: 0;
+       }
+
+       .ipad-game-item div {
+           background: #1e4e93;
+           color: white;
+           font-size: 0.15rem;
+           padding: 0.5px;
+           border-radius: 1px;
+           margin-top: 0.5px;
+       }
+
+       .ipad-score-bar {
+           position: absolute;
+           bottom: 1px;
+           left: 1px;
+           right: 1px;
+           height: 14px;
+           background: linear-gradient(135deg, #1e4e93, #2563eb);
+           border-radius: 0 0 2px 2px;
+           display: flex;
+           align-items: center;
+           justify-content: space-between;
+           padding: 0 4px;
+           font-size: 0.3rem;
+           color: white;
+           font-weight: bold;
+       }
+
+       .ipad-team-section {
+           display: flex;
+           align-items: center;
+           gap: 2px;
+       }
+
+       .ipad-team-name {
+           color: white;
+           font-size: 0.3rem;
+           font-weight: 700;
+       }
+
+       .ipad-team-score {
+           color: white;
+           font-size: 0.32rem;
+           font-weight: bold;
+           background: rgba(255, 255, 255, 0.2);
+           padding: 1px 2px;
+           border-radius: 1px;
+       }
+
+       .ipad-center-logo {
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           transform: translate(-50%, -50%);
+           width: 15px;
+           height: 15px;
+           background-image: url('https://www.raed.net/img?id=1367927');
+           background-size: contain;
+           background-repeat: no-repeat;
+           background-position: center;
+           opacity: 0.4;
+       }
+
+       /* iPhone elements */
+       .iphone-game-title {
+           text-align: center;
+           color: #1e4e93;
+           font-size: 0.25rem;
+           font-weight: bold;
+           margin-bottom: 1px;
+           border-bottom: 1px solid #1e4e93;
+           padding-bottom: 1px;
+       }
+
+       .iphone-game-grid {
+           display: grid;
+           grid-template-columns: 1fr;
+           gap: 1px;
+           margin-top: 1px;
+       }
+
+       .iphone-game-item {
+           background: #e6f0ff;
+           padding: 1px;
+           border-radius: 1px;
+           text-align: center;
+           display: flex;
+           align-items: center;
+           gap: 1px;
+       }
+
+       .iphone-game-item img {
+           width: 4px;
+           height: 4px;
+       }
+
+       .iphone-game-item p {
+           font-size: 0.18rem;
+           color: #1e4e93;
+           flex: 1;
+       }
+
+       .iphone-score-bar {
+           position: absolute;
+           bottom: 1px;
+           left: 1px;
+           right: 1px;
+           height: 8px;
+           background: linear-gradient(135deg, #1e4e93, #2563eb);
+           border-radius: 0 0 1px 1px;
+           display: flex;
+           align-items: center;
+           justify-content: space-between;
+           padding: 0 2px;
+           font-size: 0.2rem;
+           color: white;
+           font-weight: bold;
+       }
+
+       .iphone-team-section {
+           display: flex;
+           align-items: center;
+           gap: 1px;
+       }
+
+       .iphone-team-name {
+           color: white;
+           font-size: 0.2rem;
+           font-weight: 700;
+       }
+
+       .iphone-team-score {
+           color: white;
+           font-size: 0.22rem;
+           font-weight: bold;
+           background: rgba(255, 255, 255, 0.2);
+           padding: 0.5px 1px;
+           border-radius: 1px;
+       }
+
+       .iphone-center-logo {
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           transform: translate(-50%, -50%);
+           width: 8px;
+           height: 8px;
+           background-image: url('https://www.raed.net/img?id=1367927');
+           background-size: contain;
+           background-repeat: no-repeat;
+           background-position: center;
+           opacity: 0.3;
+       }
+
+       /* Game Features Section */
+       .game-features {
+           padding: 100px 60px;
+           max-width: 1400px;
+           margin: 0 auto;
+           pointer-events: none;
+           user-select: none;
+       }
+
+       .features-title {
+           text-align: center;
+           font-size: 3rem;
+           font-weight: 900;
+           margin-bottom: 80px;
+           background: linear-gradient(135deg, #ffffff, #3b82f6);
+           background-clip: text;
+           -webkit-background-clip: text;
+           -webkit-text-fill-color: transparent;
+       }
+
+       .features-container {
+           display: grid;
+           grid-template-columns: repeat(3, 1fr);
+           gap: 60px;
+           margin-top: 60px;
+       }
+
+       .feature-box {
+           background: white;
+           border-radius: 20px;
+           padding: 40px 30px;
+           text-align: center;
+           box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+           border: 2px solid transparent;
+           pointer-events: none;
+           user-select: none;
+           cursor: default;
+       }
+
+       .feature-name {
+           font-size: 1.5rem;
+           font-weight: 700;
+           color: #1e4e93;
+           margin-bottom: 15px;
+           text-decoration: underline;
+           text-decoration-color: #1e4e93;
+           text-underline-offset: 8px;
+           text-decoration-thickness: 3px;
+           pointer-events: none;
+           user-select: none;
+       }
+
+       .feature-image {
+           width: 120px;
+           height: 120px;
+           margin: 20px auto;
+           border-radius: 15px;
+           object-fit: cover;
+           box-shadow: 0 8px 25px rgba(30, 78, 147, 0.2);
+           pointer-events: none;
+           user-select: none;
+       }
+
+       .feature-description {
+           color: #1e4e93;
+           font-size: 1.1rem;
+           line-height: 1.7;
+           font-weight: 500;
+           pointer-events: none;
+           user-select: none;
+       }
+
+       /* Team Help */
+       .team-help-section {
+           position: relative;
+           display: flex;
+           align-items: center;
+           justify-content: space-between;
+           margin: 8px 0;
+           padding: 0 8px;
+       }
+
+       .help-title {
+           text-align: center;
+           font-size: 0.4rem;
+           font-weight: 700;
+           color: #1e4e93;
+           margin-bottom: 4px;
+       }
+
+       .help-images {
+           display: flex;
+           gap: 3px;
+           align-items: center;
+       }
+
+       .help-image {
+           width: 8px;
+           height: 8px;
+           border-radius: 2px;
+           object-fit: cover;
+           box-shadow: 0 2px 6px rgba(30, 78, 147, 0.3);
+       }
+
+       .center-swalf-logo {
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           transform: translate(-50%, -50%);
+           width: 12px;
+           height: 12px;
+           background-image: url('https://www.raed.net/img?id=1367927');
+           background-size: contain;
+           background-repeat: no-repeat;
+           background-position: center;
+           opacity: 0.8;
+           z-index: 5;
+       }
+
+       /* iPad Team Help */
+       .ipad-team-help {
+           position: relative;
+           display: flex;
+           align-items: center;
+           justify-content: space-between;
+           margin: 8px 0;
+           padding: 0 6px;
+       }
+
+       .ipad-help-title {
+           text-align: center;
+           font-size: 0.3rem;
+           font-weight: 700;
+           color: #1e4e93;
+           margin-bottom: 3px;
+       }
+
+       .ipad-help-images {
+           display: flex;
+           gap: 2px;
+           align-items: center;
+       }
+
+       .ipad-help-image {
+           width: 8px;
+           height: 8px;
+           border-radius: 2px;
+           object-fit: cover;
+       }
+
+       .ipad-center-swalf {
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           transform: translate(-50%, -50%);
+           width: 12px;
+           height: 12px;
+           background-image: url('https://www.raed.net/img?id=1367927');
+           background-size: contain;
+           background-repeat: no-repeat;
+           background-position: center;
+           opacity: 0.7;
+       }
+
+       /* iPhone Team Help */
+       .iphone-team-help {
+           position: relative;
+           display: flex;
+           align-items: center;
+           justify-content: space-between;
+           margin: 4px 0;
+           padding: 0 3px;
+       }
+
+       .iphone-help-title {
+           text-align: center;
+           font-size: 0.2rem;
+           font-weight: 700;
+           color: #1e4e93;
+           margin-bottom: 1px;
+       }
+
+       .iphone-help-images {
+           display: flex;
+           gap: 1px;
+           align-items: center;
+       }
+
+       .iphone-help-image {
+           width: 4px;
+           height: 4px;
+           border-radius: 1px;
+           object-fit: cover;
+       }
+
+       .iphone-center-swalf {
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           transform: translate(-50%, -50%);
+           width: 6px;
+           height: 6px;
+           background-image: url('https://www.raed.net/img?id=1367927');
+           background-size: contain;
+           background-repeat: no-repeat;
+           background-position: center;
+           opacity: 0.6;
+       }
+
+       /* Contact Section */
+       .contact-section {
+           padding: 60px 60px;
+           max-width: 1400px;
+           margin: 0 auto;
+       }
+
+       .contact-box {
+           background: white;
+           border-radius: 20px;
+           padding: 40px;
+           text-align: center;
+           box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+           border: 2px solid transparent;
+           position: relative;
+           display: flex;
+           align-items: center;
+           justify-content: space-between;
+           gap: 40px;
+       }
+
+       .contact-content {
+           flex: 1;
+           text-align: right;
+       }
+
+       .contact-title {
+           font-size: 2rem;
+           font-weight: 700;
+           color: #1e4e93;
+           margin-bottom: 20px;
+           text-decoration: underline;
+           text-decoration-color: #1e4e93;
+           text-underline-offset: 15px;
+           text-decoration-thickness: 3px;
+       }
+
+       .contact-arrow {
+           width: 60px;
+           height: 60px;
+           background-image: url('https://www.raed.net/img?id=1368088');
+           background-size: contain;
+           background-repeat: no-repeat;
+           background-position: center;
+           flex-shrink: 0;
+       }
+
+       .contact-description {
+           color: #1e4e93;
+           font-size: 1.2rem;
+           line-height: 1.7;
+           font-weight: 500;
+       }
+
+       .contact-logo {
+           width: 80px;
+           height: 80px;
+           background-image: url('https://www.raed.net/img?id=1367927');
+           background-size: contain;
+           background-repeat: no-repeat;
+           background-position: center;
+           flex-shrink: 0;
+       }
+
+       /* Footer */
+       .footer {
+           background: linear-gradient(135deg, rgba(30, 78, 147, 0.2), rgba(0, 0, 0, 0.5));
+           backdrop-filter: blur(25px);
+           border-top: 1px solid rgba(255, 255, 255, 0.1);
+           padding: 80px 60px 40px;
+           text-align: center;
+       }
+
+       .footer-content {
+           max-width: 1400px;
+           margin: 0 auto;
+       }
+
+       .footer-logo {
+           width: 100px;
+           height: 100px;
+           background-image: url('https://www.raed.net/img?id=1367927');
+           background-size: contain;
+           background-repeat: no-repeat;
+           background-position: center;
+           filter: drop-shadow(0 0 30px rgba(30, 78, 147, 0.6));
+           margin: 0 auto 30px;
+           transition: all 0.3s ease;
+       }
+
+       .footer-logo:hover {
+           transform: scale(1.15);
+           filter: drop-shadow(0 0 50px rgba(59, 130, 246, 0.9));
+       }
+
+       .copyright {
+           color: rgba(255, 255, 255, 0.6);
+           padding-top: 40px;
+           border-top: 1px solid rgba(255, 255, 255, 0.1);
+           font-size: 1rem;
+       }
+
+       /* Animations */
+       @keyframes powerBlink {
+           0%, 100% { opacity: 1; }
+           50% { opacity: 0.3; }
+       }
+
+       @keyframes tvFloat {
+           0%, 100% { transform: perspective(1000px) rotateY(-10deg) translateY(0px); }
+           50% { transform: perspective(1000px) rotateY(-10deg) translateY(-15px); }
+       }
+
+       @keyframes deviceFloat {
+           0%, 100% { transform: translateY(0px); }
+           50% { transform: translateY(-10px); }
+       }
+
+       /* Responsive */
+       @media (max-width: 1200px) {
+           .hero {
+               grid-template-columns: 1fr;
+               text-align: center;
+               gap: 60px;
+           }
+
+           .features-container {
+               grid-template-columns: repeat(2, 1fr);
+               gap: 40px;
+           }
+       }
+
+       @media (max-width: 768px) {
+           .nav {
+               padding: 0 30px;
+           }
+
+           .nav-menu {
+               display: none;
+           }
+
+           .hero {
+               padding: 100px 30px 40px;
+           }
+
+           .hero-title {
+               font-size: 3.5rem;
+           }
+
+           .hero-subtitle {
+               font-size: 1.5rem;
+           }
+
+           .game-features {
+               padding: 100px 30px;
+           }
+
+           .features-container {
+               grid-template-columns: 1fr;
+               gap: 30px;
+           }
+
+           .cta-container {
+               flex-direction: column;
+               align-items: center;
+           }
+
+           .btn {
+               width: 100%;
+               max-width: 300px;
+           }
+       }
