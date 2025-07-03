@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سوالف - قريباً</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #1e4e93, #1e90ff, #00bfff);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        /* Background سوالف text */
+        body::before {
+            content: 'سوالف';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 25vw;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.08);
+            z-index: 1;
+            white-space: nowrap;
+            pointer-events: none;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .main-title {
+            font-size: 4rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            line-height: 1.2;
+            font-family: 'Cairo', sans-serif;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .devices-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 80px;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+
+        /* TV/iPad Container */
+        .ipad-container {
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .ipad {
+            width: 500px;
+            height: 350px;
+            background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
+            border-radius: 25px;
+            padding: 15px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            position: relative;
+            border: 2px solid #444;
+        }
+
+        .ipad-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f5f9ff, #e8f4f8);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header inside iPad */
+        .ipad-header {
+            background: linear-gradient(135deg, #1e4e93, #1e90ff, #00bfff);
+            color: white;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 10px;
+            flex-shrink: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .ipad-header-logo {
+            width: 24px;
+            height: 24px;
+            background-image: url('https://www.raed.net/img?id=1367927');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 4px;
+        }
+
+        .ipad-header button {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 8px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: 'Cairo', sans-serif;
+            margin: 0 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .ipad-header button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Game board inside iPad */
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 6px;
+            padding: 12px;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .category-card {
+            background: linear-gradient(145deg, #ffffff, #f8fbff);
+            border-radius: 8px;
+            padding: 6px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            border: 2px solid #1e90ff;
+            gap: 4px;
+            min-height: 0;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            flex-shrink: 0;
+        }
+
+        .category-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: #1e4e93;
+            background: #f0f8ff;
+            border: 1px solid #1e90ff;
+            flex-shrink: 0;
+        }
+
+        .category-name {
+            font-size: 7px;
+            font-weight: 700;
+            color: #1e4e93;
+            text-align: center;
+            line-height: 1;
+            font-family: 'Cairo', sans-serif;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+
+        .scores-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 2px;
+            width: 100%;
+            flex: 1;
+            min-height: 40px;
+        }
+
+        .score-btn {
+            background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+            border: 1px solid #1e90ff;
+            border-radius: 4px;
+            padding: 2px;
+            font-size: 7px;
+            font-weight: 700;
+            color: #1e4e93;
+            text-align: center;
+            font-family: 'Cairo', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 15px;
+            box-sizing: border-box;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .score-btn:hover {
+            background: linear-gradient(145deg, #bbdefb, #90caf9);
+            transform: scale(1.05);
+        }
+
+        /* Footer inside iPad */
+        .ipad-footer {
+            background: linear-gradient(135deg, #e8f4f8, #f0f8ff);
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 9px;
+            flex-shrink: 0;
+            border-top: 1px solid rgba(30, 144, 255, 0.2);
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .ipad-team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .ipad-team-name {
+            font-size: 9px;
+            font-weight: 600;
+            color: #003366;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .ipad-team-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(30, 144, 255, 0.1);
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+
+        .ipad-score-btn {
+            background: rgba(30, 144, 255, 0.3);
+            border: none;
+            color: #003366;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            font-size: 10px;
+            font-weight: bold;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .ipad-score-btn:hover {
+            background: rgba(30, 144, 255, 0.5);
+        }
+
+        .ipad-score {
+            font-size: 11px;
+            font-weight: 700;
+            color: #003366;
+            min-width: 20px;
+            text-align: center;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .ipad-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .ipad-footer-logo {
+            width: 20px;
+            height: 20px;
+            background-image: url('https://www.raed.net/img?id=1367927');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 4px;
+        }
+
+        /* iPhone Container */
+        .phone-container {
+            position: relative;
+            animation: float 3s ease-in-out infinite 1.5s;
+        }
+
+        .phone-mockup {
+            width: 180px;
+            height: 360px;
+            background: linear-gradient(145deg, #1a1a1a, #2c2c2c);
+            border-radius: 35px;
+            padding: 6px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            transform: perspective(1000px) rotateY(15deg) rotateX(5deg);
+            position: relative;
+            border: 2px solid #444;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f5f9ff, #e8f4f8);
+            border-radius: 28px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* iPhone notch */
+        .phone-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 20px;
+            background: #000;
+            border-radius: 0 0 15px 15px;
+            z-index: 10;
+        }
+
+        /* Home indicator */
+        .phone-screen::after {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 2px;
+            z-index: 10;
+        }
+
+        /* iPhone Status Bar */
+        .phone-status-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 25px;
+            background: transparent;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2px 15px 0;
+            font-size: 8px;
+            font-weight: 600;
+            color: #000;
+            z-index: 15;
+        }
+
+        .status-left {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .status-right {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .signal-bars {
+            display: flex;
+            gap: 1px;
+        }
+
+        .signal-bar {
+            width: 2px;
+            background: #000;
+            border-radius: 1px;
+        }
+
+        .signal-bar:nth-child(1) { height: 3px; }
+        .signal-bar:nth-child(2) { height: 4px; }
+        .signal-bar:nth-child(3) { height: 5px; }
+        .signal-bar:nth-child(4) { height: 6px; }
+
+        .wifi-icon {
+            width: 8px;
+            height: 6px;
+            background: #000;
+            border-radius: 2px 2px 0 0;
+            position: relative;
+        }
+
+        .wifi-icon::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            height: 2px;
+            background: #000;
+            border-radius: 2px;
+        }
+
+        .battery {
+            width: 15px;
+            height: 8px;
+            border: 1px solid #000;
+            border-radius: 2px;
+            position: relative;
+            background: #fff;
+        }
+
+        .battery::before {
+            content: '';
+            position: absolute;
+            right: -2px;
+            top: 2px;
+            width: 1px;
+            height: 2px;
+            background: #000;
+            border-radius: 0 1px 1px 0;
+        }
+
+        .battery::after {
+            content: '';
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            right: 1px;
+            bottom: 1px;
+            background: #4CAF50;
+            border-radius: 1px;
+            width: 75%;
+        }
+
+        /* Phone app header */
+        .phone-header {
+            background: linear-gradient(135deg, #1e4e93, #1e90ff, #00bfff);
+            color: white;
+            padding: 30px 15px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            flex-shrink: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .phone-header-logo {
+            width: 16px;
+            height: 16px;
+            background-image: url('https://www.raed.net/img?id=1367927');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 3px;
+        }
+
+        /* Game content in phone */
+        .phone-game-content {
+            flex: 1;
+            padding: 15px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .phone-category-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .phone-category-card {
+            background: linear-gradient(145deg, #ffffff, #f8fbff);
+            border-radius: 6px;
+            padding: 6px 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            border: 1px solid #1e90ff;
+            min-height: 50px;
+        }
+
+        .phone-category-icon {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            font-weight: bold;
+            color: #1e4e93;
+            background: #f0f8ff;
+            border: 1px solid #1e90ff;
+        }
+
+        .phone-category-name {
+            font-size: 6px;
+            font-weight: 600;
+            color: #1e4e93;
+            text-align: center;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .phone-footer {
+            background: linear-gradient(135deg, #e8f4f8, #f0f8ff);
+            padding: 8px 10px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 6px;
+            flex-shrink: 0;
+            border-top: 1px solid rgba(30, 144, 255, 0.2);
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .phone-team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .phone-team-name {
+            font-size: 6px;
+            font-weight: 600;
+            color: #003366;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .phone-team-score {
+            font-size: 8px;
+            font-weight: 700;
+            color: #003366;
+            background: rgba(30, 144, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .download-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .app-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .app-store-btn {
+            display: inline-block;
+            background: linear-gradient(145deg, #000, #333);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .app-store-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* About section */
+        .about-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            max-width: 800px;
+            text-align: center;
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+
+        .about-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+            font-family: 'Cairo', sans-serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-text {
+            font-size: 1.2rem;
+            color: white;
+            line-height: 1.8;
+            font-family: 'Cairo', sans-serif;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body::before {
+                font-size: 30vw;
+            }
+            
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .devices-container {
+                flex-direction: column;
+                gap: 40px;
+            }
+            
+            .ipad {
+                width: 400px;
+                height: 280px;
+            }
+            
+            .phone-mockup {
+                width: 150px;
+                height: 300px;
+            }
+            
+            .about-section {
+                padding: 30px 20px;
+                margin: 30px 10px;
+            }
+            
+            .about-title {
+                font-size: 2rem;
+            }
+            
+            .about-text {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .ipad {
+                width: 320px;
+                height: 220px;
+            }
+            
+            .phone-mockup {
+                width: 130px;
+                height: 260px;
+            }
+            
+            .about-title {
+                font-size: 1.8rem;
+            }
+            
+            .about-text {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">COMING SOON</h1>
+        
+        <div class="devices-container">
+            <div class="ipad-container">
+                <div class="ipad">
+                    <div class="ipad-screen">
+                        <!-- Header -->
+                        <div class="ipad-header">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div class="ipad-header-logo"></div>
+                                <span style="font-weight: 600;">سوالف</span>
+                            </div>
+                            <div style="display: flex; gap: 6px;">
+                                <button>انتهاء اللعبة</button>
+                                <button>الرجوع للوحة</button>
+                                <button>الخروج</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Game Board -->
+                        <div class="game-board">
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <img src="images/pen.png" alt="ولا كلمة" style="width: 20px; height: 20px; border-radius: 4px; object-fit: contain;">
+                                    <div class="category-name">ولا كلمة</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">800</div>
+                                    <div class="score-btn">1000</div>
+                                    <div class="score-btn">1200</div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <img src="images/frame.png" alt="مونوبولي" style="width: 20px; height: 20px; border-radius: 4px; object-fit: contain;">
+                                    <div class="category-name">مونوبولي</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">800</div>
+                                    <div class="score-btn">1000</div>
+                                    <div class="score-btn">1200</div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <img src="images/kuwait.png" alt="الكويت" style="width: 20px; height: 20px; border-radius: 4px; object-fit: contain;">
+                                    <div class="category-name">الكويت</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">800</div>
+                                    <div class="score-btn">1000</div>
+                                    <div class="score-btn">1200</div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <img src="images/tires.png" alt="سيارات" style="width: 20px; height: 20px; border-radius: 4px; object-fit: contain;">
+                                    <div class="category-name">سيارات</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">800</div>
+                                    <div class="score-btn">1000</div>
+                                    <div class="score-btn">1200</div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <img src="images/books.png" alt="بلوت" style="width: 20px; height: 20px; border-radius: 4px; object-fit: contain;">
+                                    <div class="category-name">بلوت</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">800</div>
+                                    <div class="score-btn">1000</div>
+                                    <div class="score-btn">1200</div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <img src="images/factory.png" alt="منتجات" style="width: 20px; height: 20px; border-radius: 4px; object-fit: contain;">
+                                    <div class="category-name">منتجات</div>
+                                </div>
+                                <div class="scores-container">
+                                    <div class="score-btn">200</div>
+                                    <div class="score-btn">400</div>
+                                    <div class="score-btn">600</div>
+                                    <div class="score-btn">800</div>
+                                    <div class="score-btn">1000</div>
+                                    <div class="score-btn">1200</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Footer -->
+                        <div class="ipad-footer">
+                            <div class="ipad-team">
+                                <div class="ipad-team-name">الفريق الأول</div>
+                                <div class="ipad-team-controls">
+                                    <button class="ipad-score-btn">-</button>
+                                    <div class="ipad-score">1200</div>
+                                    <button class="ipad-score-btn">+</button>
+                                </div>
+                            </div>
+                            
+                            <div class="ipad-center">
+                                <div class="ipad-footer-logo"></div>
+                            </div>
+                            
+                            <div class="ipad-team">
+                                <div class="ipad-team-name">الفريق الثاني</div>
+                                <div class="ipad-team-controls">
+                                    <button class="ipad-score-btn">-</button>
+                                    <div class="ipad-score">800</div>
+                                    <button class="ipad-score-btn">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="phone-container">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <!-- iPhone Status Bar -->
+                        <div class="phone-status-bar">
+                            <div class="status-left">
+                                <div class="signal-bars">
+                                    <div class="signal-bar"></div>
+                                    <div class="signal-bar"></div>
+                                    <div class="signal-bar"></div>
+                                    <div class="signal-bar"></div>
+                                </div>
+                                <div class="wifi-icon"></div>
+                            </div>
+                            <div style="font-weight: 700;">9:41</div>
+                            <div class="status-right">
+                                <span style="font-size: 7px;">100%</span>
+                                <div class="battery"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Phone Header -->
+                        <div class="phone-header">
+                            <span style="font-weight: 600; font-size: 10px;">سوالف</span>
+                        </div>
+                        
+                        <!-- Phone Game Content -->
+                        <div class="phone-game-content">
+                            <div class="phone-category-grid">
+                                <div class="phone-category-card">
+                                    <img src="images/pen.png" alt="ولا كلمة" style="width: 16px; height: 16px; border-radius: 3px; object-fit: contain;">
+                                    <div class="phone-category-name">ولا كلمة</div>
+                                </div>
+                                <div class="phone-category-card">
+                                    <img src="images/frame.png" alt="مونوبولي" style="width: 16px; height: 16px; border-radius: 3px; object-fit: contain;">
+                                    <div class="phone-category-name">مونوبولي</div>
+                                </div>
+                                <div class="phone-category-card">
+                                    <img src="images/kaaba.png" alt="الكويت" style="width: 16px; height: 16px; border-radius: 3px; object-fit: contain;">
+                                    <div class="phone-category-name">الكويت</div>
+                                </div>
+                                <div class="phone-category-card">
+                                    <img src="images/buildings.png" alt="مجلس الامة" style="width: 16px; height: 16px; border-radius: 3px; object-fit: contain;">
+                                    <div class="phone-category-name">مجلس الامة</div>
+                                </div>
+                                <div class="phone-category-card">
+                                    <img src="images/tires.png" alt="سيارات" style="width: 16px; height: 16px; border-radius: 3px; object-fit: contain;">
+                                    <div class="phone-category-name">سيارات</div>
+                                </div>
+                                <div class="phone-category-card">
+                                    <img src="images/books.png" alt="بلوت" style="width: 16px; height: 16px; border-radius: 3px; object-fit: contain;">
+                                    <div class="phone-category-name">بلوت</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Phone Footer -->
+                        <div class="phone-footer">
+                            <div class="phone-team">
+                                <div class="phone-team-name">الفريق الأول</div>
+                                <div class="phone-team-score">1200</div>
+                            </div>
+                            
+                            <div class="phone-team">
+                                <div class="phone-team-name">الفريق الثاني</div>
+                                <div class="phone-team-score">800</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="download-section">
+            <h3 class="app-title">سوالف</h3>
+            <a href="#" class="app-store-btn">📱 Coming Soon to App Store</a>
+        </div>
+        
+        <div class="about-section">
+            <h2 class="about-title">من حنا؟</h2>
+            <p class="about-text">
+                حنا لعبة سوالف العبة عبارة عن فريقين , اللعبة تشمل من 1 إلى 6 فئات متنوعة ، وأسئلة مصممة لاختبار معلوماتك وزيادة الحماس. ولتعزيز فرص الفوز والتفوق، وفرنا 3 وسائل مساعدة لكل فريق
+            </p>
+        </div>
+    </div>
+</body>
+</html>
