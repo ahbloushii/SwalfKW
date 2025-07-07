@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>سوالف - COMING SOON</title>
+  <title>i3tmd - COMING SOON</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
 
   <style>
@@ -13,19 +13,19 @@
     /* ---------- Base ---------- */
     body {
       font-family: 'Cairo', sans-serif;
-      background: linear-gradient(135deg, #1e4e93, #1e90ff, #00bfff);
+      background: linear-gradient(135deg, #4a1a8a, #6b2bb8, #8b3fd6);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       position: relative;
-      overflow-x: hidden;   /* يمنع التمرير الجانبي */
+      overflow-x: hidden;
     }
 
     /* background word */
     body::before {
-      content: 'سوالف';
+      content: 'اعتمد';
       position: fixed;
       top: 50%;
       left: 50%;
@@ -66,7 +66,7 @@
       align-items: center;
       justify-content: center;
       gap: 80px;
-      flex-wrap: wrap;          /* يسمح بالنقل في السطر التالي للأجهزة الصغيرة */
+      flex-wrap: wrap;
       margin: 40px 0;
     }
 
@@ -95,7 +95,7 @@
 
     /* iPad header */
     .ipad-header {
-      background: linear-gradient(135deg,#1e4e93,#1e90ff,#00bfff);
+      background: linear-gradient(135deg,#4a1a8a,#6b2bb8,#8b3fd6);
       color:#fff;
       padding: 8px 12px;
       display:flex;
@@ -105,8 +105,14 @@
     }
     .ipad-header-logo{
       width:24px;height:24px;
-      background:url('https://www.raed.net/img?id=1367927') center/contain no-repeat;
+      background:#fff;
       border-radius:4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 8px;
+      color: #6b2bb8;
     }
     .ipad-header button{
       background:rgba(255,255,255,.2);
@@ -130,13 +136,13 @@
       box-shadow:0 4px 8px rgba(0,0,0,.1);
       display:flex;flex-direction:column;
       align-items:center;justify-content:space-between;
-      border:2px solid #1e90ff;gap:4px;
+      border:2px solid #6b2bb8;gap:4px;
       transition:.3s;
     }
     .category-card:hover{transform:translateY(-2px);box-shadow:0 6px 12px rgba(0,0,0,.15);}
     .category-header{display:flex;flex-direction:column;align-items:center;gap:3px;}
     .category-name{
-      font-size:7px;font-weight:700;color:#1e4e93;
+      font-size:7px;font-weight:700;color:#4a1a8a;
       text-align:center;line-height:1;white-space:nowrap;
       overflow:hidden;text-overflow:ellipsis;max-width:100%;
     }
@@ -147,34 +153,40 @@
       gap:2px;width:100%;flex:1;min-height:40px;
     }
     .score-btn{
-      background:linear-gradient(145deg,#e3f2fd,#bbdefb);
-      border:1px solid #1e90ff;border-radius:4px;
-      font-size:7px;font-weight:700;color:#1e4e93;
+      background:linear-gradient(145deg,#e8d5f7,#d4b8f0);
+      border:1px solid #6b2bb8;border-radius:4px;
+      font-size:7px;font-weight:700;color:#4a1a8a;
       display:flex;align-items:center;justify-content:center;
       cursor:pointer;transition:.3s;
     }
-    .score-btn:hover{background:linear-gradient(145deg,#bbdefb,#90caf9);transform:scale(1.05);}
+    .score-btn:hover{background:linear-gradient(145deg,#d4b8f0,#c19ce8);transform:scale(1.05);}
 
     /* iPad footer */
     .ipad-footer{
-      background:linear-gradient(135deg,#e8f4f8,#f0f8ff);
+      background:linear-gradient(135deg,#f3f0ff,#f8f5ff);
       padding:8px 12px;
       display:flex;align-items:center;justify-content:space-between;
-      font-size:9px;border-top:1px solid rgba(30,144,255,.2);
+      font-size:9px;border-top:1px solid rgba(107,43,184,.2);
     }
     .ipad-team{display:flex;flex-direction:column;align-items:center;gap:4px;}
-    .ipad-team-name{font-size:9px;font-weight:600;color:#003366;}
-    .ipad-team-controls{display:flex;align-items:center;gap:6px;background:rgba(30,144,255,.1);padding:4px 8px;border-radius:12px;}
+    .ipad-team-name{font-size:9px;font-weight:600;color:#4a1a8a;}
+    .ipad-team-controls{display:flex;align-items:center;gap:6px;background:rgba(107,43,184,.1);padding:4px 8px;border-radius:12px;}
     .ipad-score-btn{
-      background:rgba(30,144,255,.3);border:none;color:#003366;
+      background:rgba(107,43,184,.3);border:none;color:#4a1a8a;
       width:16px;height:16px;border-radius:50%;font-size:10px;font-weight:bold;
       cursor:pointer;transition:.3s;
     }
-    .ipad-score-btn:hover{background:rgba(30,144,255,.5);}
-    .ipad-score{font-size:11px;font-weight:700;color:#003366;min-width:20px;text-align:center;}
+    .ipad-score-btn:hover{background:rgba(107,43,184,.5);}
+    .ipad-score{font-size:11px;font-weight:700;color:#4a1a8a;min-width:20px;text-align:center;}
     .ipad-footer-logo{
       width:20px;height:20px;border-radius:4px;
-      background:url('https://www.raed.net/img?id=1367927') center/contain no-repeat;
+      background:#fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 6px;
+      color: #6b2bb8;
     }
 
     /* ---------- iPhone Mockup ---------- */
@@ -193,7 +205,7 @@
       border-radius:28px;
       display:flex;flex-direction:column;justify-content:space-between;
       position:relative;
-      overflow:auto;                  /* يسمح بالتمرير عند امتلاء المحتوى */
+      overflow:auto;
       -webkit-overflow-scrolling:touch;
       padding-bottom:10px;
     }
@@ -230,7 +242,7 @@
 
     /* Phone header */
     .phone-header{
-      background:linear-gradient(135deg,#1e4e93,#1e90ff,#00bfff);
+      background:linear-gradient(135deg,#4a1a8a,#6b2bb8,#8b3fd6);
       color:#fff;padding:30px 15px 10px;display:flex;justify-content:center;
       font-size:10px;font-weight:600;
     }
@@ -240,28 +252,28 @@
     .phone-category-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:10px;}
     .phone-category-card{
       background:linear-gradient(145deg,#fff,#f8fbff);
-      border:1px solid #1e90ff;border-radius:6px;
+      border:1px solid #6b2bb8;border-radius:6px;
       display:flex;flex-direction:column;align-items:center;gap:4px;
       padding:6px 4px;min-height:50px;
     }
-    .phone-category-name{font-size:6px;font-weight:600;color:#1e4e93;text-align:center;}
+    .phone-category-name{font-size:6px;font-weight:600;color:#4a1a8a;text-align:center;}
 
     /* Phone footer */
     .phone-footer{
-      background:linear-gradient(135deg,#e8f4f8,#f0f8ff);
+      background:linear-gradient(135deg,#f3f0ff,#f8f5ff);
       padding:8px 10px 15px;
       display:flex;justify-content:space-between;align-items:center;
-      font-size:6px;border-top:1px solid rgba(30,144,255,.2);
+      font-size:6px;border-top:1px solid rgba(107,43,184,.2);
     }
     .phone-team{display:flex;flex-direction:column;align-items:center;gap:2px;}
-    .phone-team-name{font-size:6px;font-weight:600;color:#003366;}
-    .phone-team-score{font-size:8px;font-weight:700;color:#003366;background:rgba(30,144,255,.1);padding:2px 6px;border-radius:8px;}
+    .phone-team-name{font-size:6px;font-weight:600;color:#4a1a8a;}
+    .phone-team-score{font-size:8px;font-weight:700;color:#4a1a8a;background:rgba(107,43,184,.1);padding:2px 6px;border-radius:8px;}
 
     /* ---------- Download & About ---------- */
     .download-section{display:flex;flex-direction:column;align-items:center;gap:15px;animation:fadeInUp 1s ease-out .5s both;}
     .app-title{font-size:1.8rem;font-weight:600;color:#fff;text-shadow:1px 1px 2px rgba(0,0,0,.3);}
     .app-store-btn{
-      background:linear-gradient(145deg,#000,#333);color:#fff;
+      background:linear-gradient(145deg,#4a1a8a,#6b2bb8);color:#fff;
       padding:15px 30px;border-radius:12px;text-decoration:none;
       font-size:16px;font-weight:600;transition:.3s;
       box-shadow:0 8px 20px rgba(0,0,0,.3);
@@ -287,7 +299,7 @@
       .main-title{font-size:2.5rem;}
       .devices-container{gap:40px;}
       .ipad{width:400px;height:280px;}
-      .phone-mockup{width:200px;height:380px;transform:none;} /* يلغى المنظور ثلاثي الأبعاد لتقليل الاقتصاص */
+      .phone-mockup{width:200px;height:380px;transform:none;}
       .about-section{padding:30px 20px;margin:30px 10px;}
       .about-title{font-size:2rem;}
       .about-text{font-size:1rem;}
@@ -314,8 +326,8 @@
             <!-- Header -->
             <div class="ipad-header">
               <div style="display:flex;align-items:center;gap:10px;">
-                <div class="ipad-header-logo"></div>
-                <span style="font-weight:600;">سوالف</span>
+                <div class="ipad-header-logo">i3</div>
+                <span style="font-weight:600;">i3tmd</span>
               </div>
               <div style="display:flex;gap:6px;">
                 <button>انتهاء اللعبة</button>
@@ -406,7 +418,7 @@
               </div>
 
               <div class="ipad-center">
-                <div class="ipad-footer-logo"></div>
+                <div class="ipad-footer-logo">i3</div>
               </div>
 
               <div class="ipad-team">
@@ -444,7 +456,7 @@
 
             <!-- Header -->
             <div class="phone-header">
-              سوالف
+              i3tmd
             </div>
 
             <!-- Content -->
@@ -496,14 +508,14 @@
 
   <!-- ================= Download + About ================= -->
   <div class="download-section">
-    <h3 class="app-title">سوالف</h3>
+    <h3 class="app-title">اعتمد</h3>
     <a href="#" class="app-store-btn">📱 Coming Soon to App Store</a>
   </div>
 
   <div class="about-section">
     <h2 class="about-title">منو احنا ؟</h2>
     <p class="about-text">
-    احنا لعبة سوالف. اللعبة عبارة عن فريقين، وتشمل من 1 إلى 6 فئات متنوعة، وأسئلة مصممة لإختبار معلوماتك وزيادة الحماس. ولتعزيز فرص الفوز والتفوق وفرنا 3 وسائل مساعدة لكل فريق.
+    احنا لعبة اعتمد. اللعبة عبارة عن فريقين، وتشمل من 1 إلى 6 فئات متنوعة، وأسئلة مصممة لإختبار معلوماتك وزيادة الحماس. ولتعزيز فرص الفوز والتفوق وفرنا 3 وسائل مساعدة لكل فريق.
     </p>
   </div>
 </body>
